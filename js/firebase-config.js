@@ -5,13 +5,13 @@
 // Web App: echallan-web
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD1AeL4BdWAvpSAMH3KFzyJa4-ycmqUfjo",
+  apiKey: "AIzaSyD1AeL4BdWAVpSAMH3KFzyJa4-ycmqUfjo",
   authDomain: "echallen-a0522.firebaseapp.com",
   databaseURL: "https://echallen-a0522-default-rtdb.firebaseio.com",
   projectId: "echallen-a0522",
   storageBucket: "echallen-a0522.firebasestorage.app",
   messagingSenderId: "1098097878799",
-  appId: "1:1098097878799:web:99c2f19672da864013807a"
+  appId: "1:1098097878799:web:99c2f19672da064013807a"
 };
 
 // Initialize Firebase
@@ -27,7 +27,6 @@ const db = firebase.database();
 // HELPER FUNCTIONS
 // ==========================================
 
-// Protect page — agar login nahi hai toh index.html pe bhejo
 function requireAuth() {
   auth.onAuthStateChanged((user) => {
     if (!user) {
@@ -39,14 +38,12 @@ function requireAuth() {
   });
 }
 
-// Logout
 function logout() {
   auth.signOut().then(() => {
     window.location.href = "index.html";
   });
 }
 
-// Format timestamp to readable date
 function formatTime(ts) {
   if (!ts) return "N/A";
   if (typeof ts === "string") return ts;
@@ -58,7 +55,6 @@ function formatTime(ts) {
   });
 }
 
-// Escape HTML for safe display
 function escapeHtml(s) {
   if (s === undefined || s === null) return "-";
   return String(s).replace(/[&<>"']/g, (c) => ({
@@ -70,13 +66,11 @@ function escapeHtml(s) {
   }[c]));
 }
 
-// Device online check (last_seen < 5 minutes)
 function isDeviceOnline(lastSeen) {
   if (!lastSeen) return false;
   return (Date.now() - lastSeen) < (5 * 60 * 1000);
 }
 
-// Short device name (last 4 chars of deviceId)
 function shortDeviceName(deviceId) {
   if (!deviceId) return "----";
   return String(deviceId).slice(-4);
