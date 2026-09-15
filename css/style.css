@@ -1,0 +1,105 @@
+/* ==========================================
+   eChallan Admin - Global Styles
+   Theme: Maroon + White
+   ========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --maroon: #800000;
+  --maroon-dark: #5c0000;
+  --maroon-light: #a52a2a;
+}
+
+html, body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #800000 0%, #5c0000 60%, #2b0000 100%);
+  background-attachment: fixed;
+  color: #333;
+}
+
+/* ============ LOGIN PAGE ============ */
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 35px 25px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.5s ease;
+}
+
+.login-header { text-align: center; margin-bottom: 28px; }
+.login-header h1 { color: #fff; font-size: 24px; margin-top: 15px; letter-spacing: 0.5px; }
+.login-header p { color: rgba(255,255,255,0.75); font-size: 13px; margin-top: 4px; }
+
+.logo-circle {
+  width: 75px; height: 75px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #a52a2a, #5c0000);
+  display: flex; justify-content: center; align-items: center;
+  font-size: 36px;
+  margin: 0 auto;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 -4px 10px rgba(0,0,0,0.3);
+}
+
+.input-group { margin-bottom: 18px; }
+.input-group label {
+  display: block; color: #fff;
+  font-size: 13px; margin-bottom: 6px; font-weight: 600;
+}
+.input-group input {
+  width: 100%; padding: 14px 16px;
+  border: none; border-radius: 12px;
+  background: rgba(255,255,255,0.92);
+  font-size: 15px; outline: none;
+  transition: all 0.2s;
+}
+.input-group input:focus {
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.5);
+}
+
+.btn-3d {
+  width: 100%; padding: 15px;
+  border: none; border-radius: 14px;
+  background: linear-gradient(145deg, #b71c1c, #5c0000);
+  color: #fff; font-size: 15px; font-weight: 800;
+  cursor: pointer; letter-spacing: 1px;
+  box-shadow:
+    0 8px 20px rgba(0,0,0,0.4),
+    inset 0 2px 4px rgba(255,255,255,0.3),
+    inset 0 -4px 8px rgba(0,0,0,0.35);
+  transition: all 0.15s;
+}
+.btn-3d:active { transform: translateY(2px); box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+.btn-3d:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.error-msg {
+  color: #ffcccc; text-align: center;
+  margin-top: 12px; font-size: 13px; font-weight: 600;
+  min-height: 18px;
+}
+.footer-text {
+  text-align: center; color: rgba(255,255,255,0.5);
+  font-size: 11px; margin-top: 22px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
